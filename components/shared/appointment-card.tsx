@@ -1,4 +1,3 @@
-// app/components/AppointmentCard.tsx
 'use client';
 
 import * as React from 'react';

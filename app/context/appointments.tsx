@@ -1,4 +1,3 @@
-// src/context/appointments.tsx
 'use client';
 
 import { ViewType } from '@/types/types';

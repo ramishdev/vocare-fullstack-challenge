@@ -1,4 +1,3 @@
-// src/lib/schemas/appointments.ts
 import { z } from 'zod';
 
 export const AppointmentsQuery = z.object({
@@ -7,6 +6,18 @@ export const AppointmentsQuery = z.object({
   date: z.string().refine((d) => !isNaN(Date.parse(d)), {
     message: '`date` must be an ISO string',
   }),
+  startDate: z
+    .string()
+    .refine((d) => !isNaN(Date.parse(d)), {
+      message: '`startDate` must be an ISO string',
+    })
+    .optional(),
+  endDate: z
+    .string()
+    .refine((d) => !isNaN(Date.parse(d)), {
+      message: '`endDate` must be an ISO string',
+    })
+    .optional(),
   limit: z
     .string()
     .transform((s) => parseInt(s, 10))

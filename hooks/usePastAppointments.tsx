@@ -1,4 +1,3 @@
-// hooks/usePastAppointments.ts
 import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite';
 import { formatISO } from 'date-fns';
 import fetcher from '@/lib/fetcher';
@@ -14,13 +13,15 @@ export function usePastAppointments(selectedDate: Date) {
 
     const cursor =
       pageIndex === 0
-        ? formatISO(selectedDate)
+        ? formatISO(selectedDate.setHours(0, 0, 0, 0))
         : previousPage[previousPage.length - 1].start;
 
     return `/api/appointments?view=list&direction=prev&date=${encodeURIComponent(cursor)}&limit=${PAGE_SIZE}`;
   };
   const shouldLoad = React.useRef(false);
-  const { data, size, setSize, error, isValidating } = useSWRInfinite<AppointmentWithCategory[]>(getKey, fetcher, {
+  const { data, size, setSize, error, isValidating } = useSWRInfinite<
+    AppointmentWithCategory[]
+  >(getKey, fetcher, {
     // tell SWRf to start with zero pages
     initialSize: 0,
   });
