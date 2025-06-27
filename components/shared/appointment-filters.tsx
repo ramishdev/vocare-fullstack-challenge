@@ -1,7 +1,7 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -9,58 +9,87 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Category } from '@/types/types';
-import { useState, useEffect } from 'react';
+import { useAppointmentsContext } from '@/app/context/appointments';
+import { Category, Patient } from '@/types/types';
 import useSWR from 'swr';
+import { DatePicker } from './date-picker';
 
-interface Props {
-  onChange(filters: { category?: string; date?: string }): void;
-}
+export default function AppointmentFilters() {
+  const { filters, setFilters } = useAppointmentsContext();
 
-export default function AppointmentFilters({ onChange }: Props) {
-  const [category, setCategory] = useState<string>('');
-  const [date, setDate] = useState<string>('');
-  const { data: categories } = useSWR<Category[]>(
-    '/api/categories',
-    (url: string) => fetch(url).then((r) => r.json())
+  const { data: categories } = useSWR<Category[]>('/api/categories', (url: string) =>
+    fetch(url).then((res) => res.json())
   );
+  const { data: patients } = useSWR<Patient[]>('/api/patients', (url: string) =>
+    fetch(url).then((res) => res.json())
+  );  
 
-  useEffect(() => {
-    onChange({ category, date });
-  }, [category, date, onChange]);
+  const resetAll = () => setFilters({});
 
   return (
-    <div className="flex items-center space-x-4 mb-6">
-      <Select value={category} onValueChange={setCategory}>
-        <SelectTrigger className="w-48">
-          <SelectValue placeholder="Kategorie wählen" />
+    <form className="flex flex-col gap-4 min-w-[260px] p-1">
+      <div className="flex flex-col gap-1">
+        <label htmlFor="category" className="text-xs text-gray-600">
+          Category
+        </label>
+        <Select
+          value={filters.category ?? 'all'}
+          onValueChange={(val) =>
+            setFilters({ ...filters, category: val === 'all' ? undefined : val, })
+          }
+        >
+          <SelectTrigger id="category" className="w-full">
+            <SelectValue placeholder="Choose category" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Alle Kategorien</SelectItem>
-          {categories &&
-            categories?.map((cat) => (
+            <SelectItem value="all">All Categories</SelectItem>
+            {categories?.map((cat) => (
               <SelectItem key={cat.id} value={cat.id}>
                 {cat.label}
               </SelectItem>
             ))}
         </SelectContent>
       </Select>
+      </div>
 
-      <Input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        className="w-40"
-      />
+      <div className="flex flex-col gap-1">
+        <label className="text-xs text-gray-600">Date Range</label>
+        <DatePicker mode="range" />
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="patient" className="text-xs text-gray-600">
+          Patient
+        </label>
+        <Select
+          value={filters.patientId ?? 'all'}
+          onValueChange={(val) =>
+            setFilters({ ...filters, patientId: val === 'all' ? undefined : val, })
+          }
+        >
+          <SelectTrigger id="patient" className="w-full">
+            <SelectValue placeholder="Select patient" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Patients</SelectItem>
+            {patients?.map((p) => (
+              <SelectItem key={p.id} value={p.id}>
+                {p.lastname}, {p.firstname}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+
       <Button
+        type="button"
         variant="secondary"
-        onClick={() => {
-          setCategory('');
-          setDate('');
-        }}
+        className="self-end"
+        onClick={resetAll}
       >
-        Zurücksetzen
+        Reset
       </Button>
-    </div>
+    </form>
   );
 }

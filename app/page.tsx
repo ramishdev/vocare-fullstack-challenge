@@ -3,6 +3,7 @@ import AppointmentList from '@/components/calendar/appointment-list';
 import { useAppointmentsContext } from './context/appointments';
 import Header from '@/components/shared/header';
 import WeekView from '@/components/calendar/week-view';
+import MonthView from '@/components/calendar/month-view';
 
 export default function HomePage() {
   const { view } = useAppointmentsContext();
@@ -17,11 +18,14 @@ export default function HomePage() {
           </div>
         </section>
       )}
-
-      {/* You can add MonthView and WeekView here */}
       {view === 'week' && (
         <div className="flex-1 overflow-hidden">
           <WeekView />
+        </div>
+      )}
+      {view === 'month' && (
+        <div className="flex-1 overflow-hidden">
+          <MonthView />
         </div>
       )}
     </div>

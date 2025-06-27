@@ -5,7 +5,7 @@ export const AppointmentsQuery = z.object({
   direction: z.enum(['prev', 'next']).optional(),
   date: z.string().refine((d) => !isNaN(Date.parse(d)), {
     message: '`date` must be an ISO string',
-  }),
+  }).optional(),
   startDate: z
     .string()
     .refine((d) => !isNaN(Date.parse(d)), {
@@ -25,4 +25,19 @@ export const AppointmentsQuery = z.object({
       message: '`limit` must be a positive integer',
     })
     .optional(),
+  category: z.string().optional(),
+  patientId: z.string().optional(),
+});
+
+export const AppointmentsCreate = z.object({
+  title: z.string().min(1, 'Titel ist erforderlich'),
+  date: z.string().refine((d) => !isNaN(Date.parse(d)), {
+    message: 'Datum ist ungültig',
+  }),
+  start: z.string().regex(/^\d{2}:\d{2}$/, 'Startzeit ist ungültig'),
+  end: z.string().regex(/^\d{2}:\d{2}$/, 'Endzeit ist ungültig'),
+  category: z.string().optional().nullable(),
+  patient: z.string().optional().nullable(),
+  location: z.string().optional().nullable(),
+  notes: z.string().optional().nullable(),
 });

@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vocare Fullstack Challenge – Kalender- & Termin-App
 
-## Getting Started
+Eine moderne Kalender- und Terminverwaltungs-App mit Next.js, React, shadcn/ui und Supabase. Enthält Monats-, Wochen- und Listenansichten, Filter, Termin-Erstellung/Bearbeitung und mehr.
 
-First, run the development server:
+## Funktionen
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 📅 Monats-, Wochen- und Listenansicht für Termine
+- 🔍 Termine filtern nach Kategorie, Patient und Zeitraum
+- ➕ Termine in Dialogen erstellen und bearbeiten
+- 🕒 Termin-Details per Hover-Card
+- ♻️ Unendliches Nachladen für vergangene/kommende Termine
+- ⚡ Schnelle, reaktionsfähige UI mit shadcn/ui und Tailwind CSS
+- 🔄 Datenabruf und Caching mit SWR
+- 🟢 Lade-Spinner für asynchrone Zustände
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologiestack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Next.js](https://nextjs.org/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Supabase](https://supabase.com/) (Backend)
+- [SWR](https://swr.vercel.app/) (Datenfetching)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [react-spinners](https://www.davidhu.io/react-spinners/) (Loader)
+- [date-fns](https://date-fns.org/) (Datum-Utils)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Schnellstart
 
-## Learn More
+1. **Abhängigkeiten installieren:**
+   ```bash
+   npm install
+   # oder yarn install
+   ```
+2. **Umgebungsvariablen einrichten:**
+   - Kopiere `.env.example` zu `.env.local` und trage deine Supabase-Zugangsdaten ein.
+3. **Entwicklungsserver starten:**
+   ```bash
+   npm run dev
+   ```
+   Öffne [http://localhost:3000](http://localhost:3000) im Browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Projektstruktur
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `app/` – Next.js App-Verzeichnis (API-Routen, Context, Seiten)
+- `components/` – UI- und Shared-Komponenten
+- `hooks/` – Eigene React-Hooks für Termine
+- `lib/` – Utilities, Schemas und Supabase-Client
+- `types/` – TypeScript-Typen
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API-Endpunkte
 
-## Deploy on Vercel
+- `GET/POST /api/appointments` – Termine auflisten/erstellen
+- `GET/PUT /api/appointments/[id]` – Termin nach ID abrufen/aktualisieren
+- `GET /api/categories` – Kategorien auflisten
+- `GET /api/patients` – Patienten auflisten
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## UI-Änderungen
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Monatsansicht Navigation: Um zum nächsten Monat zu wechseln, klicke auf ein Datum, das zum nächsten Monat gehört (diese Daten sind in einem abgeschwächten Stil dargestellt).
+
+## Lizenz
+
+MIT – Für Bildungs- und Demozwecke.
