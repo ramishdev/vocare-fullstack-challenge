@@ -35,6 +35,8 @@ export function useMonthAppointments(
     params.append('startDate', filters.from.toISOString());
     params.append('endDate', filters.to.toISOString());
   }
+  console.log("params",params);
+  
   const key = `/api/appointments?${params.toString()}`;
 
   const { data, error, isValidating } = useSWR<AppointmentWithCategory[]>(

@@ -97,7 +97,8 @@ export async function GET(req: NextRequest) {
     }
   }
   const { data, error } = await query;
-
+  console.log("My data", data);
+  
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
