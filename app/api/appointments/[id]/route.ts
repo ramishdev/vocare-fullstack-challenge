@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { AppointmentsCreate } from '@/lib/schemas/appointments';
-import { z } from 'zod';
+import { Appointment } from '@/types/types';
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   const id = params.id;
@@ -23,7 +23,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 
   // Prepare update object
-  const update: any = {};
+  const update: Partial<Appointment> = {};
   if (body.title !== undefined) update.title = body.title;
   if (body.date !== undefined && body.start !== undefined) {
     update.start = new Date(`${body.date}T${body.start}`).toISOString();

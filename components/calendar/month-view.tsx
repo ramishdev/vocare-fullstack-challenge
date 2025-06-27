@@ -37,7 +37,7 @@ export default function MonthView() {
     const { selectedDate: date, setSelectedDate, view, filters } = useAppointmentsContext();
     const locale = de;
     const { appointments, loadNextMonth, isLoading } = useMonthAppointments(date, filters);
-    const monthDates = useMemo(() => getDaysInMonthList(date), [date, appointments]);
+    const monthDates = useMemo(() => getDaysInMonthList(date), [date]);
     const weekDays = useMemo(() => generateWeekdays(locale), [locale]);
 
     const todaysAppointments = appointments.filter(appt =>
@@ -56,7 +56,7 @@ export default function MonthView() {
         <div className="flex h-full">
             <div className="flex-1 flex flex-col">
                 <div className="grid grid-cols-7 gap-px sticky top-0 bg-background border">
-                    {weekDays.map((d, i) => (
+                    {weekDays.map((d) => (
                         <div
                             key={d}
                             className={

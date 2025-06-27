@@ -27,7 +27,7 @@ type Props = {
 } & React.ComponentPropsWithoutRef<'div'>
 
 const AppointmentCardCompact = React.forwardRef<HTMLDivElement, Props>(
-  ({ appt, fontSize = '0.875rem', top, height, compact = false, bgColor = true,style, ...divProps }, ref) => {
+  ({ appt, fontSize = '0.875rem', top, height, compact = false, bgColor = true, ...divProps }, ref) => {
     const { doneIds, toggleDone } = useAppointmentsContext();
 
     const checked = doneIds.has(appt.id);

@@ -85,7 +85,8 @@ const AppointmentCreateDialog: React.FC<AppointmentCreateDialogProps> = ({ open,
         mutate((key) => typeof key === 'string' && key.startsWith('/api/appointments?view=week')),
         mutate((key) => typeof key === 'string' && key.startsWith('/api/appointments?view=month')),
       ]);
-    } catch (err) {
+    }  // eslint-disable-next-line @typescript-eslint/no-unused-vars 
+    catch (err: unknown) {
       setError('Fehler beim Erstellen.');
       setLoading(false);
     }

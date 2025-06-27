@@ -9,12 +9,11 @@ import {
   isToday,
   isSameHour,
   differenceInMinutes,
-  parseISO,
 } from 'date-fns';
-import { de, enUS } from 'date-fns/locale';
+import { de } from 'date-fns/locale';
 import { useWeekAppointments } from '@/hooks/useWeekAppointments';
 import { useAppointmentsContext } from '@/app/context/appointments';
-import { ChevronLeft, ChevronRight, Clock, MapPin, MessageSquare } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AppointmentWithCategory } from '@/types/types';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card';
@@ -161,7 +160,7 @@ export default function WeekView() {
         <>
           <div className="flex sticky top-0 bg-card z-10 border-b border-t">
             <div className="w-24 pl-11" />
-            {headerDays.map((day, i) => (
+            {headerDays.map((day) => (
               <div
                 key={day.toString()}
                 className={cn(

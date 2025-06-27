@@ -1,13 +1,14 @@
 export default async function fetcher(
   input: RequestInfo,
   init?: RequestInit
-): Promise<any> {
+): /* eslint-disable @typescript-eslint/no-explicit-any */
+  Promise<any> {
   const res = await fetch(input, init);
   if (!res.ok) {
     let errorInfo = null;
     try {
       errorInfo = await res.json();
-    } catch {}
+    } catch { }
     const error = new Error(
       errorInfo?.message || res.statusText || 'An error occurred while fetching'
     );

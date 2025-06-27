@@ -22,7 +22,6 @@ export default function AppointmentList() {
   const [isLoadingRange, setIsLoadingRange] = React.useState(false);
 
   React.useEffect(() => {
-    let cancelled = false;
     if (filters.from && filters.to) {
       setIsLoadingRange(true);
       const fromISO = filters.from.toISOString();

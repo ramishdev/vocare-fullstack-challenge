@@ -1,6 +1,6 @@
 import { AppointmentsQuery, AppointmentsCreate } from '@/lib/schemas/appointments';
 import { supabase } from '@/lib/supabase';
-import { addMonths, addWeeks, subMonths, subWeeks } from 'date-fns';
+import { addMonths, addWeeks, subMonths } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -129,7 +129,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
     return NextResponse.json(data, { status: 201 });
-  } catch (e) {
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars 
+  catch (error: unknown) {
     return NextResponse.json({ error: 'Invalid request.' }, { status: 400 });
   }
 }

@@ -22,12 +22,7 @@ export function DatePicker({ mode = 'single' }: DatePickerProps) {
     setFilters,
   } = useAppointmentsContext();
 
-  // ---- Determine “value” based on mode ----
-  const value = mode === 'single'
-    ? selectedDate
-    : { from: filters.from, to: filters.to };
 
-  // ---- Build the button label ----
   const label = React.useMemo(() => {
     if (mode === 'single') {
       return selectedDate
@@ -96,7 +91,6 @@ export function DatePicker({ mode = 'single' }: DatePickerProps) {
               if (r) {
                 setFilters({ ...filters, from: r.from, to: r.to });
               }
-              // keep open until user clicks away
             }}
             locale={de}
             captionLayout="dropdown"
