@@ -134,8 +134,9 @@ const AppointmentEditDialog: React.FC<AppointmentEditDialogProps> = ({
             key.startsWith('/api/appointments?view=month')
         ),
       ]);
-    } catch (err: unknown) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars 
+    catch (err: unknown) {
       setError('Fehler beim Bearbeiten.');
       setLoading(false);
     }

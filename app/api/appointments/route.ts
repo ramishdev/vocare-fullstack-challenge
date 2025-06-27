@@ -138,8 +138,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
     return NextResponse.json(data, { status: 201 });
-  } catch (error: unknown) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  catch (error: unknown) {
     return NextResponse.json({ error: 'Invalid request.' }, { status: 400 });
   }
 }
