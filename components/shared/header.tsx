@@ -86,7 +86,7 @@ export default function Header() {
               {activeFilterCount > 0 && (
                 <Badge
                   variant="destructive"
-                  className="absolute bg-black -bottom-4 -right-2 px-2 py-0.5 text-xs"
+                  className="absolute bg-black -bottom-4 -right-2 px-2 py-0.5 text-xs z-30"
                 >
                   {activeFilterCount}
                 </Badge>
