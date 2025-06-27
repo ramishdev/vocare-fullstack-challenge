@@ -137,15 +137,6 @@ export default function MonthView() {
             );
           })}
         </div>
-
-        <div className="py-3 text-center border-t bg-background">
-          <button
-            onClick={loadNextMonth}
-            className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-md shadow-sm hover:bg-primary/90 transition"
-          >
-            Nächsten Monat laden
-          </button>
-        </div>
       </div>
 
       <aside className="w-80 border-l p-4 overflow-auto bg-white">
