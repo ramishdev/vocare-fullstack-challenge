@@ -77,7 +77,8 @@ export async function GET(req: NextRequest) {
 
       const start = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
       const end = addMonths(start, 1);
-
+      console.log("ansnjnj",start,end);
+      
       query = query
         .gte('start', start.toISOString())
         .lt('start', end.toISOString())
