@@ -2,22 +2,28 @@
 import AppointmentList from '@/components/calendar/appointment-list';
 import { useAppointmentsContext } from './context/appointments';
 import Header from '@/components/shared/header';
+import WeekView from '@/components/calendar/week-view';
 
 export default function HomePage() {
   const { view } = useAppointmentsContext();
 
   return (
-    <main className="flex flex-col h-screen">
+    <div className="h-dvh flex flex-col">
       <Header />
-      <section className="flex-1 overflow-y-auto bg-gray-100 py-8">
-        {view === 'list' && (
+      {view === 'list' && (
+        <section className="flex-1 overflow-y-auto bg-gray-100 py-8">
           <div className="bg-gray-100 w-full">
             <AppointmentList />
           </div>
-        )}
+        </section>
+      )}
 
-        {/* You can add MonthView and WeekView here */}
-      </section>
-    </main>
+      {/* You can add MonthView and WeekView here */}
+      {view === 'week' && (
+        <div className="flex-1 overflow-hidden">
+          <WeekView />
+        </div>
+      )}
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-// app/api/appointments/route.ts
 import { AppointmentsQuery } from '@/lib/schemas/appointments';
 import { supabase } from '@/lib/supabase';
 import { addMonths, addWeeks, subMonths, subWeeks } from 'date-fns';
@@ -16,7 +15,14 @@ export async function GET(req: NextRequest) {
       { status: 400 }
     );
   }
-  const { view, direction, date: dateStr, limit: pageSize } = result.data;
+  const {
+    view,
+    direction,
+    date: dateStr,
+    startDate,
+    endDate,
+    limit: pageSize,
+  } = result.data;
 
   const selected = new Date(dateStr);
 
@@ -32,9 +38,7 @@ export async function GET(req: NextRequest) {
     // cursor-based paging
 
     if (direction === 'prev') {
-      query = query
-        .lt('start', selected.toISOString())
-        .order('start', { ascending: false });
+      query = query.lt('start', dateStr).order('start', { ascending: false });
     } else if (direction == 'next') {
       query = query.gt('start', dateStr).order('start', { ascending: true });
     } else {
@@ -59,20 +63,8 @@ export async function GET(req: NextRequest) {
       .lt('start', end.toISOString())
       .order('start', { ascending: true });
   } else if (view === 'week') {
-    const day = selected.getDay();
-    const mondayOffset = (day + 6) % 7;
-    const baseMonday = new Date(selected);
-    baseMonday.setDate(selected.getDate() - mondayOffset);
-
-    const start =
-      direction === 'prev'
-        ? subWeeks(baseMonday, 1)
-        : direction === 'next'
-          ? addWeeks(baseMonday, 1)
-          : baseMonday;
-
+    const start = selected;
     const end = addWeeks(start, 1);
-
     query = query
       .gte('start', start.toISOString())
       .lt('start', end.toISOString())

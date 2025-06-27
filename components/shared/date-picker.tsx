@@ -1,4 +1,3 @@
-// app/components/DatePicker.tsx
 'use client';
 
 import * as React from 'react';

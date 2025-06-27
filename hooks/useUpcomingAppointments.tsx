@@ -1,4 +1,3 @@
-// hooks/useUpcomingAppointments.ts
 import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite';
 import { formatISO } from 'date-fns';
 import fetcher from '@/lib/fetcher';
@@ -13,7 +12,7 @@ export function useUpcomingAppointments(selectedDate: Date) {
 
     const cursor =
       pageIndex === 0
-        ? formatISO(selectedDate)
+        ? formatISO(selectedDate.setHours(0, 0, 0, 0))
         : previousPage[previousPage.length - 1].start;
 
     return `/api/appointments?view=list${pageIndex > 0 ? '&direction=next' : ''}&date=${encodeURIComponent(cursor)}&limit=${PAGE_SIZE}`;
