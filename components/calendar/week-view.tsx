@@ -16,7 +16,11 @@ import { useAppointmentsContext } from '@/app/context/appointments';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AppointmentWithCategory } from '@/types/types';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '../ui/hover-card';
 import AppointmentCardCompact from '../shared/appointment-card-compact';
 import { AppointmentHoverCardContent } from '../shared/appointment-hover-card';
 import Loader from '../shared/Loader';

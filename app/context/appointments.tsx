@@ -9,8 +9,6 @@ import React, {
   useCallback,
 } from 'react';
 
-
-
 interface AppointmentsContextValue {
   view: ViewType;
   setView: (v: ViewType) => void;

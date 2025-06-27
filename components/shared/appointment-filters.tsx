@@ -15,12 +15,13 @@ import { DatePicker } from './date-picker';
 export default function AppointmentFilters() {
   const { filters, setFilters } = useAppointmentsContext();
 
-  const { data: categories } = useSWR<Category[]>('/api/categories', (url: string) =>
-    fetch(url).then((res) => res.json())
+  const { data: categories } = useSWR<Category[]>(
+    '/api/categories',
+    (url: string) => fetch(url).then((res) => res.json())
   );
   const { data: patients } = useSWR<Patient[]>('/api/patients', (url: string) =>
     fetch(url).then((res) => res.json())
-  );  
+  );
 
   const resetAll = () => setFilters({});
 
@@ -33,21 +34,24 @@ export default function AppointmentFilters() {
         <Select
           value={filters.category ?? 'all'}
           onValueChange={(val) =>
-            setFilters({ ...filters, category: val === 'all' ? undefined : val, })
+            setFilters({
+              ...filters,
+              category: val === 'all' ? undefined : val,
+            })
           }
         >
           <SelectTrigger id="category" className="w-full">
             <SelectValue placeholder="Choose category" />
-        </SelectTrigger>
-        <SelectContent>
+          </SelectTrigger>
+          <SelectContent>
             <SelectItem value="all">All Categories</SelectItem>
             {categories?.map((cat) => (
               <SelectItem key={cat.id} value={cat.id}>
                 {cat.label}
               </SelectItem>
             ))}
-        </SelectContent>
-      </Select>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="flex flex-col gap-1">
@@ -62,7 +66,10 @@ export default function AppointmentFilters() {
         <Select
           value={filters.patientId ?? 'all'}
           onValueChange={(val) =>
-            setFilters({ ...filters, patientId: val === 'all' ? undefined : val, })
+            setFilters({
+              ...filters,
+              patientId: val === 'all' ? undefined : val,
+            })
           }
         >
           <SelectTrigger id="patient" className="w-full">
@@ -78,7 +85,6 @@ export default function AppointmentFilters() {
           </SelectContent>
         </Select>
       </div>
-
 
       <Button
         type="button"

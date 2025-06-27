@@ -18,7 +18,9 @@ export default function AppointmentList() {
 
   // If date range is set, fetch all appointments in that range
   const isDateRange = filters.from && filters.to;
-  const [rangeAppointments, setRangeAppointments] = React.useState<AppointmentWithCategory[]>([]);
+  const [rangeAppointments, setRangeAppointments] = React.useState<
+    AppointmentWithCategory[]
+  >([]);
   const [isLoadingRange, setIsLoadingRange] = React.useState(false);
 
   React.useEffect(() => {
@@ -38,20 +40,25 @@ export default function AppointmentList() {
         params.append('patientId', filters.patientId);
       }
       fetch(`/api/appointments?${params.toString()}`)
-        .then(res => res.json())
-        .then(data => {
-          setIsLoadingRange(false)
+        .then((res) => res.json())
+        .then((data) => {
+          setIsLoadingRange(false);
           if (Array.isArray(data)) {
             setRangeAppointments(data);
           } else {
             setRangeAppointments([]);
           }
         });
-      
     } else {
       setRangeAppointments([]);
     }
-  }, [filters.from, filters.to, filters.category, filters.patientId, isDateRange]);
+  }, [
+    filters.from,
+    filters.to,
+    filters.category,
+    filters.patientId,
+    isDateRange,
+  ]);
 
   const {
     appointments: pastAppts,
@@ -118,9 +125,7 @@ export default function AppointmentList() {
           className="text-center text-sm font-semibold text-gray-600 mb-4 cursor-pointer hover:underline"
           onClick={loadMorePast}
         >
-          {isLoadingPast
-            ?  <Loader />
-            : `Termine vor dem ${oldestLabel} laden`}
+          {isLoadingPast ? <Loader /> : `Termine vor dem ${oldestLabel} laden`}
         </div>
       )}
       {!hasMorePast && (
@@ -170,9 +175,11 @@ export default function AppointmentList() {
           className="text-center text-sm font-semibold text-gray-600 mt-4 cursor-pointer hover:underline"
           onClick={loadMoreUpcoming}
         >
-          {isLoadingUpcoming
-            ?  <Loader />
-            : `Termine nach dem ${newestLabel} laden`}
+          {isLoadingUpcoming ? (
+            <Loader />
+          ) : (
+            `Termine nach dem ${newestLabel} laden`
+          )}
         </div>
       )}
 

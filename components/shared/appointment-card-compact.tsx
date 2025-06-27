@@ -18,16 +18,27 @@ import { cn } from '@/lib/utils';
 import toLight100 from '@/lib/light-color';
 
 type Props = {
-  appt: AppointmentWithCategory
-  fontSize?: string
-  top?: string | number
-  height?: string | number
-  compact?: boolean
-  bgColor?: boolean
-} & React.ComponentPropsWithoutRef<'div'>
+  appt: AppointmentWithCategory;
+  fontSize?: string;
+  top?: string | number;
+  height?: string | number;
+  compact?: boolean;
+  bgColor?: boolean;
+} & React.ComponentPropsWithoutRef<'div'>;
 
 const AppointmentCardCompact = React.forwardRef<HTMLDivElement, Props>(
-  ({ appt, fontSize = '0.875rem', top, height, compact = false, bgColor = true, ...divProps }, ref) => {
+  (
+    {
+      appt,
+      fontSize = '0.875rem',
+      top,
+      height,
+      compact = false,
+      bgColor = true,
+      ...divProps
+    },
+    ref
+  ) => {
     const { doneIds, toggleDone } = useAppointmentsContext();
 
     const checked = doneIds.has(appt.id);
@@ -38,19 +49,22 @@ const AppointmentCardCompact = React.forwardRef<HTMLDivElement, Props>(
 
     const timeDisplay =
       start && end
-        ? `${format(start, 'HH:mm', { locale: de })} bis ${format(end, 'HH:mm', {
-          locale: de,
-        })} Uhr`
+        ? `${format(start, 'HH:mm', { locale: de })} bis ${format(
+            end,
+            'HH:mm',
+            {
+              locale: de,
+            }
+          )} Uhr`
         : '';
 
     const color = appt.categories?.color || '#a78bfa';
-
 
     return (
       <Card
         ref={ref}
         className={cn(
-          "relative p-1 gap-0 w-full overflow-hidden",
+          'relative p-1 gap-0 w-full overflow-hidden',
           compact && 'rounded-md',
           invalidTime && 'border border-red-500'
         )}
@@ -128,6 +142,6 @@ const AppointmentCardCompact = React.forwardRef<HTMLDivElement, Props>(
       </Card>
     );
   }
-)
+);
 AppointmentCardCompact.displayName = 'AppointmentCardCompact';
 export default AppointmentCardCompact;

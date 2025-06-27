@@ -19,4 +19,4 @@ export type FilterOptions = {
   to?: Date;
   patientId?: string;
   location?: string;
-}
+};

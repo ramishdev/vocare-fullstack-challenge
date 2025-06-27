@@ -5,7 +5,11 @@ import { format } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@/components/ui/popover';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { useAppointmentsContext } from '@/app/context/appointments';
 
@@ -15,13 +19,8 @@ type DatePickerProps = {
 
 export function DatePicker({ mode = 'single' }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
-  const {
-    selectedDate,
-    setSelectedDate,
-    filters,
-    setFilters,
-  } = useAppointmentsContext();
-
+  const { selectedDate, setSelectedDate, filters, setFilters } =
+    useAppointmentsContext();
 
   const label = React.useMemo(() => {
     if (mode === 'single') {
@@ -57,8 +56,8 @@ export function DatePicker({ mode = 'single' }: DatePickerProps) {
               label.startsWith('Datum')
                 ? 'text-gray-400'
                 : label.startsWith('Zeitraum')
-                ? 'text-gray-400'
-                : ''
+                  ? 'text-gray-400'
+                  : ''
             }
           >
             {label}
@@ -67,7 +66,7 @@ export function DatePicker({ mode = 'single' }: DatePickerProps) {
       </PopoverTrigger>
 
       <PopoverContent className="w-auto p-0 mt-2" align="start">
-      {mode === 'single' ? (
+        {mode === 'single' ? (
           <Calendar
             mode="single"
             selected={selectedDate}
@@ -82,7 +81,6 @@ export function DatePicker({ mode = 'single' }: DatePickerProps) {
             captionLayout="dropdown"
             numberOfMonths={1}
           />
-        
         ) : (
           <Calendar
             mode="range"

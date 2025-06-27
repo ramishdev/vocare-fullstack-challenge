@@ -6,7 +6,11 @@ import { DatePicker } from './date-picker';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Plus as PlusIcon, SlidersHorizontalIcon } from 'lucide-react';
 import { useAppointmentsContext } from '@/app/context/appointments';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@/components/ui/popover';
 import AppointmentFilters from './appointment-filters';
 import { useState } from 'react';
 import AppointmentCreateDialog from './appointment-create-dialog';
@@ -90,9 +94,7 @@ export default function Header() {
             </div>
           </PopoverTrigger>
           <PopoverContent align="end">
-            <AppointmentFilters
-
-            />
+            <AppointmentFilters />
           </PopoverContent>
         </Popover>
         <Button

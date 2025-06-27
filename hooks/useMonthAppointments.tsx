@@ -4,7 +4,10 @@ import { formatISO, addMonths } from 'date-fns';
 import fetcher from '@/lib/fetcher';
 import { AppointmentWithCategory, FilterOptions } from '@/types/types';
 
-export function useMonthAppointments(selectedDate: Date, filters?: FilterOptions) {
+export function useMonthAppointments(
+  selectedDate: Date,
+  filters?: FilterOptions
+) {
   const [monthOffset, setMonthOffset] = useState(0);
   const [currentMonthStart, setCurrentMonthStart] = useState<Date>();
 
@@ -21,7 +24,7 @@ export function useMonthAppointments(selectedDate: Date, filters?: FilterOptions
     setCurrentMonthStart(shifted);
     return formatISO(shifted);
   }, [selectedDate, monthOffset]);
-  
+
   const params = new URLSearchParams({
     view: 'month',
     date: monthStartISO,

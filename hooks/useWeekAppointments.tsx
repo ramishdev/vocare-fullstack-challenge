@@ -4,7 +4,10 @@ import { formatISO, addWeeks } from 'date-fns';
 import fetcher from '@/lib/fetcher';
 import { AppointmentWithCategory, FilterOptions } from '@/types/types';
 
-export function useWeekAppointments(selectedDate: Date, filters?: FilterOptions) {
+export function useWeekAppointments(
+  selectedDate: Date,
+  filters?: FilterOptions
+) {
   const [weekOffset, setWeekOffset] = useState(0);
   const [nextDate, setNextDate] = useState<Date>();
   useEffect(() => {
