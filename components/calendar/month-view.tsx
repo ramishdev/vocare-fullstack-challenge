@@ -60,7 +60,8 @@ export default function MonthView() {
   );
   const monthDates = useMemo(() => getDaysInMonthList(date), [date]);
   const weekDays = useMemo(() => generateWeekdays(locale), [locale]);
-
+  console.log(monthDates,weekDays);
+  
   const todaysAppointments = appointments.filter(
     (appt) => appt.start != null && isSameDay(appt.start, date)
   );
