@@ -54,7 +54,7 @@ export default function MonthView() {
     filters,
   } = useAppointmentsContext();
   const locale = de;
-  const { appointments, loadNextMonth, isLoading } = useMonthAppointments(
+  const { appointments, isLoading } = useMonthAppointments(
     date,
     filters
   );
