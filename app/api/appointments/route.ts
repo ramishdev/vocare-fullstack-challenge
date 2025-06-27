@@ -74,7 +74,8 @@ export async function GET(req: NextRequest) {
       let monthDate = selected;
       if (direction === 'prev') monthDate = subMonths(selected, 1);
       else if (direction === 'next') monthDate = addMonths(selected, 1);
-
+      console.log("Selected date",monthDate);
+      
       const start = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
       const end = addMonths(start, 1);
       console.log("ansnjnj",start,end);
