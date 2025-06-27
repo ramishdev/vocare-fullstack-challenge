@@ -15,8 +15,6 @@ import Loader from '../shared/Loader';
 export default function AppointmentList() {
   const { selectedDate, filters } = useAppointmentsContext();
   const date = format(selectedDate, 'yyyy-MM-dd', { locale: de });
-
-  // If date range is set, fetch all appointments in that range
   const isDateRange = filters.from && filters.to;
   const [rangeAppointments, setRangeAppointments] = React.useState<
     AppointmentWithCategory[]

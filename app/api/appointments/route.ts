@@ -9,7 +9,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams.entries();
   const raw = Object.fromEntries(searchParams);
-  console.log("raw",raw);
   
   const result = AppointmentsQuery.safeParse(raw);
 
@@ -76,11 +75,9 @@ export async function GET(req: NextRequest) {
       let monthDate = selected;
       if (direction === 'prev') monthDate = subMonths(selected, 1);
       else if (direction === 'next') monthDate = addMonths(selected, 1);
-      console.log("Selected date",monthDate.toUTCString());
       
       const start = new Date(Date.UTC(monthDate.getFullYear(), monthDate.getMonth(), 1));
       const end = addMonths(start, 1);
-      console.log("ansnjnj",start,end);
       
       query = query
         .gte('start', start.toISOString())
@@ -101,7 +98,6 @@ export async function GET(req: NextRequest) {
     }
   }
   const { data, error } = await query;
-  console.log("My data", data);
   
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

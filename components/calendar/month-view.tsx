@@ -58,7 +58,7 @@ export default function MonthView() {
     date,
     filters
   );
-  const monthDates = useMemo(() => getDaysInMonthList(date), [date,appointments]);
+  const monthDates = useMemo(() => getDaysInMonthList(date), [date]);
   const weekDays = useMemo(() => generateWeekdays(locale), [locale]);
 
   const todaysAppointments = appointments.filter(
