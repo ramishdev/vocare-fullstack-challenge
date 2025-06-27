@@ -8,7 +8,6 @@ const PAGE_SIZE = 15;
 export function useUpcomingAppointments(selectedDate: Date) {
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPage) => {
     if (previousPage && previousPage.length < PAGE_SIZE) return null;
-    console.log(pageIndex);
 
     const cursor =
       pageIndex === 0

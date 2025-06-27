@@ -10,10 +10,49 @@ import { AppointmentWithCategory } from '@/types/types';
 import { usePastAppointments } from '@/hooks/usePastAppointments';
 import { useUpcomingAppointments } from '@/hooks/useUpcomingAppointments';
 import { useAppointmentsContext } from '@/app/context/appointments';
+import Loader from '../shared/Loader';
 
 export default function AppointmentList() {
-  const { selectedDate } = useAppointmentsContext();
+  const { selectedDate, filters } = useAppointmentsContext();
   const date = format(selectedDate, 'yyyy-MM-dd', { locale: de });
+
+  // If date range is set, fetch all appointments in that range
+  const isDateRange = filters.from && filters.to;
+  const [rangeAppointments, setRangeAppointments] = React.useState<AppointmentWithCategory[]>([]);
+  const [isLoadingRange, setIsLoadingRange] = React.useState(false);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    if (filters.from && filters.to) {
+      setIsLoadingRange(true);
+      const fromISO = filters.from.toISOString();
+      const toISO = filters.to.toISOString();
+      const params = new URLSearchParams({
+        view: 'list',
+        startDate: fromISO,
+        endDate: toISO,
+      });
+      if (filters.category) {
+        params.append('category', filters.category);
+      }
+      if (filters.patientId) {
+        params.append('patientId', filters.patientId);
+      }
+      fetch(`/api/appointments?${params.toString()}`)
+        .then(res => res.json())
+        .then(data => {
+          setIsLoadingRange(false)
+          if (Array.isArray(data)) {
+            setRangeAppointments(data);
+          } else {
+            setRangeAppointments([]);
+          }
+        });
+      
+    } else {
+      setRangeAppointments([]);
+    }
+  }, [filters.from, filters.to, filters.category, filters.patientId, isDateRange]);
 
   const {
     appointments: pastAppts,
@@ -30,12 +69,19 @@ export default function AppointmentList() {
   } = useUpcomingAppointments(selectedDate);
 
   const allAppts = React.useMemo(() => {
+    if (isDateRange) {
+      return [...rangeAppointments].sort((a, b) => {
+        const aTime = a.start ? new Date(a.start).getTime() : 0;
+        const bTime = b.start ? new Date(b.start).getTime() : 0;
+        return aTime - bTime;
+      });
+    }
     return [...pastAppts, ...upcomingAppts].sort((a, b) => {
       const aTime = a.start ? new Date(a.start).getTime() : 0;
       const bTime = b.start ? new Date(b.start).getTime() : 0;
       return aTime - bTime;
     });
-  }, [pastAppts, upcomingAppts]);
+  }, [isDateRange, rangeAppointments, pastAppts, upcomingAppts]);
 
   const oldest = pastAppts.at(-1)?.start ?? date;
   const newest = upcomingAppts.at(-1)?.start ?? date;
@@ -63,14 +109,18 @@ export default function AppointmentList() {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      {/* Termine vor dem ... laden */}
-      {hasMorePast && (
+      {isDateRange && isLoadingRange && (
+        <div className="flex justify-center my-6">
+          <Loader />
+        </div>
+      )}
+      {!isDateRange && hasMorePast && (
         <div
           className="text-center text-sm font-semibold text-gray-600 mb-4 cursor-pointer hover:underline"
           onClick={loadMorePast}
         >
           {isLoadingPast
-            ? 'Termine werden geladen…'
+            ?  <Loader />
             : `Termine vor dem ${oldestLabel} laden`}
         </div>
       )}
@@ -116,19 +166,17 @@ export default function AppointmentList() {
         })
       )}
 
-      {/* Termine nach dem ... laden */}
-      {hasMoreUpcoming && (
+      {!isDateRange && hasMoreUpcoming && (
         <div
           className="text-center text-sm font-semibold text-gray-600 mt-4 cursor-pointer hover:underline"
           onClick={loadMoreUpcoming}
         >
           {isLoadingUpcoming
-            ? 'Termine werden geladen…'
+            ?  <Loader />
             : `Termine nach dem ${newestLabel} laden`}
         </div>
       )}
 
-      {/* Keine weiteren Termine gefunden */}
       {!hasMoreUpcoming && entries.length > 0 && (
         <div className="text-center text-sm text-gray-500 my-6">
           Keine weiteren Termine gefunden

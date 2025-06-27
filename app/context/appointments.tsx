@@ -1,6 +1,6 @@
 'use client';
 
-import { ViewType } from '@/types/types';
+import { FilterOptions, ViewType } from '@/types/types';
 import React, {
   createContext,
   useContext,
@@ -9,9 +9,7 @@ import React, {
   useCallback,
 } from 'react';
 
-export interface FilterOptions {
-  categoryIds?: string[];
-}
+
 
 interface AppointmentsContextValue {
   view: ViewType;

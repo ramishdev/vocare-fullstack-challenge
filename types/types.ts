@@ -13,3 +13,10 @@ export type AppointmentWithCategory = Appointment & {
 };
 
 export type ViewType = 'list' | 'month' | 'week';
+export type FilterOptions = {
+  category?: string;
+  from?: Date;
+  to?: Date;
+  patientId?: string;
+  location?: string;
+}

@@ -1,13 +1,15 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import useSWR from 'swr';
 import { formatISO, addWeeks } from 'date-fns';
 import fetcher from '@/lib/fetcher';
-import { AppointmentWithCategory } from '@/types/types';
+import { AppointmentWithCategory, FilterOptions } from '@/types/types';
 
-export function useWeekAppointments(selectedDate: Date) {
+export function useWeekAppointments(selectedDate: Date, filters?: FilterOptions) {
   const [weekOffset, setWeekOffset] = useState(0);
   const [nextDate, setNextDate] = useState<Date>();
-
+  useEffect(() => {
+    setWeekOffset(0);
+  }, [selectedDate]);
   const weekStartISO = useMemo(() => {
     const dayOfWeek = selectedDate.getDay();
     const mondayOffset = (dayOfWeek + 6) % 7;
@@ -19,8 +21,18 @@ export function useWeekAppointments(selectedDate: Date) {
     return formatISO(shiftedMonday);
   }, [selectedDate, weekOffset]);
 
-  const key =
-    `/api/appointments?view=week` + `&date=${encodeURIComponent(weekStartISO)}`;
+  // Build query params for filters
+  const params = new URLSearchParams({
+    view: 'week',
+    date: weekStartISO,
+  });
+  if (filters?.category) params.append('category', filters.category);
+  if (filters?.patientId) params.append('patientId', filters.patientId);
+  if (filters?.from && filters?.to) {
+    params.append('startDate', filters.from.toISOString());
+    params.append('endDate', filters.to.toISOString());
+  }
+  const key = `/api/appointments?${params.toString()}`;
 
   const { data, error, isValidating } = useSWR<AppointmentWithCategory[]>(
     key,
