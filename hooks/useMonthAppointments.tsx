@@ -15,11 +15,11 @@ export function useMonthAppointments(
     setMonthOffset(0);
   }, [selectedDate]);
   const monthStartISO = useMemo(() => {
-    const firstOfMonth = new Date(
+    const firstOfMonth = new Date(Date.UTC(
       selectedDate.getFullYear(),
       selectedDate.getMonth(),
       1
-    );
+    ));
     const shifted = addMonths(firstOfMonth, monthOffset);
     setCurrentMonthStart(shifted);
     return formatISO(shifted);
